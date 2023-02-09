@@ -17,6 +17,22 @@ def add_card(item, price, show):
         writer.writeheader()
         for card in inventory:
             writer.writerow(card)
+            
+            
+def delete_card(item):
+    for i, card in enumerate(inventory):
+        if card['item'] == item:
+            del inventory[i]
+            break
+
+    # Write the updated inventory to a CSV file
+    with open('inventory.csv', 'w', newline='') as csvfile:
+        fieldnames = ['item', 'price', 'show']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for card in inventory:
+            writer.writerow(card)
+
 
 
 def view_inventory():
@@ -94,6 +110,7 @@ def main():
         5.) Add Show
         6.) View Shows
         7.) Logout
+        8.) Delete Card
         ''')
         choice = input("Select Choice: ")
         if choice == '1':
@@ -116,6 +133,10 @@ def main():
             view_shows()
         elif choice == '7':
             logout()
+        elif choice == '8':
+            item = input("Enter the card you want to delete: ")
+            delete_card(item)
+
         else:
             print("Invalid Choice")
 
